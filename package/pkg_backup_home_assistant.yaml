@@ -12,8 +12,8 @@
 homeassistant:
   customize:
     package.ha_backup:
-      version: "1.0.0"
-      date: 📅 20/07/2023 - Updated 20/07/2023
+      version: "1.0.1"
+      date: 📅 20/07/2023 - Updated 10/06/2024
       info: https://github.com/paolo-hub/Home-Assistant-Backup-Manager
       customize: &customize
         package: "Home Assistant Backup Manager by Paolo-Hub"
@@ -615,14 +615,13 @@ automation:
                     sound: pinnabor
                     priority: 0
                 alias: Pushover succesfull notification
-              - service: persistent_notification.create
+              - service: notify.persistent_notification
                 data:
                   message: >
                     Backup completed
                     {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
                     at {{states('sensor.time')}}
                   title: Home Assistant Backup
-                  notification_id: ha_backup_persistant_notification
                 alias: Persistant notification fo succesfull backup
               - alias: Test if the old backup shoud be delated
                 if: 
@@ -648,13 +647,12 @@ automation:
                     sound: pinnabor
                     priority: 1
                 alias: Pushover failed notification
-              - service: persistent_notification.create
+              - service: notify.persistent_notification
                 data:
                   message: |
                     Backup creation failed!
                     {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
                   title: Home Assistant Backup
-                  notification_id: ha_backup_persistant_notification
                 alias: Persistant notification to backp failed
             alias: Test beckup creation
         alias: Actions id a backup is created
