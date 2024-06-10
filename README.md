@@ -106,3 +106,8 @@ The "Retained Backup Settings" selector displays settings related to the removal
 ## Credits
 
 I received support from the [HassioHelp](https://t.me/HassioHelp) community in the development of this package, and I would like to express my gratitude to them.
+
+## Update List:
+
+* Version 1.0: Initial release
+* Version 1.1: Modified persistent notifications in accordance with Home Assistant version 2024.6
