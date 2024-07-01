@@ -250,9 +250,9 @@ input_button:
     name: Create Partial Backup
     icon: mdi:backup-restore
 
-  # Button to manually delate old backups.
+  # Button to manually delete old backups.
   ha_delete_backup_manually:
-    name: Delate Backups
+    name: Delete Backups
     icon: mdi:close-circle-outline
 
 #########################################################
@@ -462,7 +462,7 @@ automation:
       - platform: state
         entity_id: input_button.ha_delete_backup_manually
         id: ha_manual_bk_delate
-        alias: Trigger delate old backup
+        alias: Trigger delete old backup
     condition:
       - condition: or
         conditions:
@@ -488,7 +488,7 @@ automation:
                 alias: Condition 2 - Automatic full backup correct day
               - condition: trigger
                 id: ha_full_backup_automatic
-                alias: Condition 3 - Automatic ful backup triggered
+                alias: Condition 3 - Automatic full backup triggered
             alias: Condition for automatic full backup
           - condition: trigger
             id:
@@ -523,11 +523,11 @@ automation:
           - condition: trigger
             id:
               - ha_partial_backup_manual
-            alias: Condition for maial partial backup
+            alias: Condition for manual partial backup
           - condition: trigger
             id:
               - ha_manual_bk_delate
-            alias: Condition for manuale delate old backup
+            alias: Condition for manual delete old backup
         alias: Conditions for automatic backup
     action:
       - choose:
@@ -548,7 +548,7 @@ automation:
                 data:
                   compressed: false
                   name: Backup {{ now().strftime('%Y-%m-%d') }}
-                alias: Ececute full backup
+                alias: Execute full backup
           - conditions:
               - condition: trigger
                 id:
@@ -604,7 +604,7 @@ automation:
                   value: >-
                     Last Backup {{ now().timestamp() | timestamp_custom('%Y-%m-%d')}}
                     at {{states('sensor.time')}}
-                alias: Set backup status to succesfull
+                alias: Set backup status to successful
               - service: notify.pushover_hassio
                 data:
                   message: |
@@ -614,7 +614,7 @@ automation:
                   data:
                     sound: pinnabor
                     priority: 0
-                alias: Pushover succesfull notification
+                alias: Pushover successful notification
               - service: notify.persistent_notification
                 data:
                   message: >
@@ -622,21 +622,21 @@ automation:
                     {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
                     at {{states('sensor.time')}}
                   title: Home Assistant Backup
-                alias: Persistant notification fo succesfull backup
-              - alias: Test if the old backup shoud be delated
+                alias: Persistent notification for successful backup
+              - alias: Test if the old backup shoud be deleted
                 if: 
                   - condition: template
                     value_template: |
                       {{ states('input_boolean.ha_backup_remove_old_backup') == 'on' }}
-                    alias: IF automaitc backup delate is selected
+                    alias: IF automaitc backup delete is selected
                 then:
                   - service: shell_command.ha_backups_remove_old
-                    alias: Execut the shell command delate
+                    alias: Execut the shell command delete
             else:
               - service: input_text.set_value
                 data_template:
                   entity_id: input_text.ha_backup_status
-                  value: Backup Failled!
+                  value: Backup Failed!
                 alias: Set backup status to failed
               - service: notify.pushover_hassio
                 data:
@@ -653,18 +653,18 @@ automation:
                     Backup creation failed!
                     {{ now().timestamp() | timestamp_custom('%Y-%m-%d') }}
                   title: Home Assistant Backup
-                alias: Persistant notification to backp failed
+                alias: Persistent notification to backup failed
             alias: Test beckup creation
-        alias: Actions id a backup is created
+        alias: Actions if a backup is created
       - if:
           - condition: trigger
             id:
               - ha_manual_bk_delate
-            alias: IF manual backup delate triggered
+            alias: IF manual backup delete triggered
         then:
           - service: shell_command.ha_backups_remove_old
-            alias: Execute the shell command delate
-        alias: Actions if manual backup delate is triggered
+            alias: Execute the shell command delete
+        alias: Actions if manual backup delete is triggered
 
 
 #################################################################
