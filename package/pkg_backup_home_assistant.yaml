@@ -628,10 +628,10 @@ automation:
                   - condition: template
                     value_template: |
                       {{ states('input_boolean.ha_backup_remove_old_backup') == 'on' }}
-                    alias: IF automaitc backup delete is selected
+                    alias: IF automatic backup delete is selected
                 then:
                   - service: shell_command.ha_backups_remove_old
-                    alias: Execut the shell command delete
+                    alias: Execute the shell command delete
             else:
               - service: input_text.set_value
                 data_template:
