@@ -13,7 +13,7 @@ homeassistant:
   customize:
     package.ha_backup:
       version: "1.0.1"
-      date: 📅 20/07/2023 - Updated 10/06/2024
+      date: 📅 20/07/2023 - Updated 03/07/2024
       info: https://github.com/paolo-hub/Home-Assistant-Backup-Manager
       customize: &customize
         package: "Home Assistant Backup Manager by Paolo-Hub"
